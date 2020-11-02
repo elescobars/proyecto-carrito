@@ -1,20 +1,20 @@
 package proyectoCarrito;
 
 public class NodoDoble <t> {
+
 	private t dato;
 
-	private NodoDoble<t> next, previous;
+	private NodoDoble<t> sig, ant;
 
+	public NodoDoble(NodoDoble<t> Ant, t Dato, NodoDoble<t> Sig) {
+		ant = Ant;
+		dato = Dato;
+		sig = Sig;
+	}
 	public NodoDoble() {
-		this(null,null,null);
+		this(null, null, null);
 	}
 
-	public NodoDoble(t dato, NodoDoble<t> next, NodoDoble<t> previous) {
-		this.dato = dato;
-		this.next = next;
-		this.previous = previous;
-
-	}
 
 	public t getDato() {
 		return dato;
@@ -24,20 +24,18 @@ public class NodoDoble <t> {
 		this.dato = dato;
 	}
 
-	public NodoDoble<t> getNext() {
-		return next;
+	public NodoDoble<t> getSig() {
+		return sig;
 	}
 
-	public void setNext(NodoDoble<t> next) {
-		this.next = next;
+	public void setSig(NodoDoble<t> sig) {
+		this.sig = sig;
 	}
-
-	public NodoDoble<t> getPrevious() {
-		return previous;
+	public NodoDoble<t> getAnt() {
+		return ant;
 	}
-
-	public void setPrevious(NodoDoble<t> previous) {
-		this.previous = previous;
+	public void setAnt(NodoDoble<t> ant) {
+		this.ant = ant;
 	}
 
 }

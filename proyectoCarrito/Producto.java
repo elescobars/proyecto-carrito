@@ -37,7 +37,6 @@ public class Producto {
 		this.precio = precio;
 	}
 
-
 	public String toString() {
 		return "Producto [Clave: " + clave + ", Descripcion: " + descripcion + ", Precio: " + precio +"]";
 	}

@@ -36,5 +36,21 @@ public class Carrito {
 	public void setProductos(ListaDoble<Producto> productos) {
 		this.productos = productos;
 	}
+	
+	public void actualizaTotal() {
+		NodoDoble<Producto> nodoActual = productos.getFirst();
+		float nuevoTotal = 0;
+		
+		while(nodoActual!=null) {
+			nuevoTotal += nodoActual.getDato().getPrecio();
+			nodoActual = nodoActual.getSig();
+		}
+		
+		setTotal(nuevoTotal);
+	}
+	
+	public String toString() {
+		return "Carrito [Nombre: " + nombre + ", Total: " + total + "]";
+	}
 
 }

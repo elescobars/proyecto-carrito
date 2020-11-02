@@ -1,96 +1,134 @@
 package proyectoCarrito;
 
-public class ListaDoble<t> {
+public class ListaDoble<T> {
+	// Atributo
+	private NodoDoble<T> raiz;
 
-	private NodoDoble<t> root;
-
-	public ListaDoble() {
-		root = new NodoDoble<t>();
+	public ListaDoble () {
+		raiz = new NodoDoble<T>();
 	}
 
+	/*
+	public boolean Empty() {
+		return Raiz.getSig() == null;
+	}
+	 */
 
-	private NodoDoble<t> start() {
-		return root;
+	private NodoDoble<T> Inicio() {
+		return raiz;
 	}
 
-	private NodoDoble<t> first() {
-		return root.getNext();
+	public NodoDoble<T> Primero() {
+		return raiz.getSig();
 	}
 
-	private NodoDoble<t> last() {
-		NodoDoble<t> aux = root;
-		while (aux.getNext() != null) {
-			aux = aux.getNext();
+	/*
+	public int indexOf(int Clave) {
+		NodoDoble<T> aux = Primero();
+		int cont = 1;
+		while (aux != null && aux.getElNodo() != null) {
+			Producto p = (Producto) aux.getElNodo().getDato();
+			if (!p.equals(Clave)) {
+				aux.Avanza();
+				cont++;
+			} else
+				break;
 		}
+		return aux != null && aux.getElNodo() != null ? cont : Integer.MAX_VALUE;
+	}
 
+	public int indexOf(Object dato) {
+		NodoDoble<T> aux = Primero();
+		int cont = 0;
+		while (aux != null && aux.getElNodo() != null) {
+			Object tmp = aux.getElNodo().getDato();
+			if (!tmp.equals(dato)) {
+				aux.Avanza();
+				cont++;
+			} else
+				break;
+		}
+		return aux != null && aux.getElNodo() != null ? cont : -1;
+	}
+	 */
+
+	public NodoDoble<T> Ultimo() {
+		NodoDoble<T> aux = raiz;
+		while (aux.getSig() != null)
+			aux = aux.getSig();
 		return aux;
 	}
 
-	public void addFirst(t dato) {
-		add(dato, start());
+	public void addFirst(T datos) {
+		add(datos, Inicio());
 	}
 
-	public void addLast(t dato) {
-		add(dato, last());
+	public void addLast(T datos) {
+		add(datos, Ultimo());
 	}
 
-	public void add(t dato) {
-		add(dato, last());
+	public void add(T datos) {
+		add(datos, Ultimo());
 	}
 
-	public void add(int indice, t dato) {
-		NodoDoble<t> aux = start();
+	public void add(T datos, int indice) {
+		NodoDoble<T> aux = Inicio();
 		int cont = 0;
-		while (aux.getNext() != null && cont < indice) {
-			aux = aux.getNext();
+		while (aux.getSig() != null && cont < indice) {
+			aux = aux.getSig();
 			cont++;
 		}
-		add(dato, last());
+		add(datos, aux);
 	}
 
-	public void add(t dato, NodoDoble<t> PN) {
-		if(PN != null) {
-			PN.setNext(new NodoDoble<t>(dato, PN, PN.getNext()));
-
-			if(PN.getNext().getNext() != null)
-				PN.getNext().getNext().setPrevious(PN.getNext());
+	// NA = Nodo Actual
+	public void add(T datos, NodoDoble<T> NA) {
+		if (NA != null) {
+			NA.setSig(new NodoDoble<>(NA, datos, NA.getSig()));
+			if (NA.getSig().getSig() != null)
+				NA.getSig().getSig().setAnt(NA.getSig());
 		}
 	}
 
 	public void remove(int indice) {
-		NodoDoble<t> aux = start();
+		NodoDoble<T> aux = Inicio();
 		int cont = 0;
-		while (aux.getNext() != null && cont < (indice-1)) {
-			aux = aux.getNext();
+		while (aux.getSig() != null && cont < indice) {
+			aux = aux.getSig();
 			cont++;
 		}
-
-		if (aux.getNext() != null) {
-			aux.setNext(aux.getNext().getNext());
-			if(aux.getNext() != null) {
-				aux.getNext().setPrevious(aux);
-			}
+		if (aux.getSig() != null) {
+			aux.setSig(aux.getSig().getSig());
+			if (aux.getSig() != null)
+				aux.getSig().setAnt(aux);
 		}
 	}
+	
+	public void update() {
+		
+	}
 
-	public t get(int indice) {
-		NodoDoble<t> aux = first();
+	public T get(int indice) {
+		NodoDoble<T> aux = Primero();
 		int cont = 0;
 		while (aux != null && cont < indice) {
-			aux = aux.getNext();
+			aux = aux.getSig();
 			cont++;
 		}
-		return aux != null ? aux.getDato() : null;
+		return aux.getDato();
 	}
 
+	public NodoDoble<T> getFirst() {
+		return raiz.getSig();
+	}
+	
 	public int size() {
-		NodoDoble<t> aux = start();
+		NodoDoble<T> aux = Inicio();
 		int cont = 0;
-		while (aux.getNext() != null) {
-			aux = aux.getNext();
+		while (aux.getSig() != null) {
+			aux = aux.getSig();
 			cont++;
 		}
 		return cont;
 	}
-
 }
